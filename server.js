@@ -6,7 +6,11 @@ const sql = neon(process.env.DATABASE_URL);
 const app = express()
 app.use(express.json());
 const authRoutes = require('./routes/authRoutes')
+const preferenceRoutes = require('./routes/preferenceRoutes')
+
+
 app.use('/api/auth',authRoutes);
+app.use('/api/preferences',preferenceRoutes)
 
 
 
