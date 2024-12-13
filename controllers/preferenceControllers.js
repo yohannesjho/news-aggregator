@@ -30,4 +30,15 @@ const setSources = async (req,res) =>{
         res.status(500).json({msg:"internal error"})
     }
 }
-module.exports = {setInterests,setSources}
+
+const setKeywords = async (req,res) => {
+    const {keywords} = req.body
+    try {
+        const result  = await pool.query('INSERT INTO user_preferences(user_id,keywords) VALUES($1,$2) ON CONFLICT (user_id) DO UPDATE SET keywords = $2 RETURNING * ',[req.user.id,keywords])
+        res.status(201).json({msg:"keywords created succrssfully",result})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg:"server error"})
+    }
+}
+module.exports = {setInterests,setSources,setKeywords}
