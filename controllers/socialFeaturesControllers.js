@@ -19,3 +19,13 @@ const saveArticle = async (req,res) => {
         res.status(500).send({message:"server error"})
     }
 }
+
+const commentArticle = async (req,res) => {
+    const {articleUrl,comment} = req.body
+    try {
+        await pool.query("INSERT INTO comments(user_id,article_url,comment) VALUES($1,$2,$3)",[req.user.id,articleUrl,comment])
+        res.status(201).send({message:"successfully commented on article"})
+    } catch (error) {
+        res.status(500).send({message:"server error"})
+    }
+}
