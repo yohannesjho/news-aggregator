@@ -2,43 +2,55 @@ const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(process.env.NEWS_API);
 
 const getAllNews = async (req, res) => {
-  newsapi.v2.everything({
-    q: 'technology',
-    sources: 'bbc-news,the-verge',
-    domains: 'bbc.co.uk, techcrunch.com',
-    language: 'en',
-    sortBy: 'relevancy',
-    page: 2
-  }).then(response => {
-    res.send(response)
-    console.log(response);
-    /*
-      {
-        status: "ok",
-        articles: [...]
-      }
-    */
-  });
+  const { sources, keyword, domains, language, sortBy, page } = req.body
+  try {
+    newsapi.v2.everything({
+      q: keyword,
+      sources: sources,
+      domains: domains,
+      language: language,
+      sortBy: sortBy,
+      page: page
+    }).then(response => {
+      res.status(200).send(response)
+    });
+  } catch (error) {
+    console.log("server error")
+    res.status(500).send("server error")
+  }
 
-   
 }
 
-const getTopHeadlines = async (req,res)=>{
-  newsapi.v2.topHeadlines({
-    q: 'bitcoin',
-    category: 'business',
-    language: 'en',
-    country: 'us'
-  }).then(response => {
-    res.send(response)
-    console.log(response);
-    /*
-      {
-        status: "ok",
-        articles: [...]
-      }
-    */
-  });
+const getTopHeadlines = async (req, res) => {
+  const { sources, keyword, category, language, country } = req.body
+
+  console.log(req.body)
+
+  try {
+    newsapi.v2.topHeadlines({
+
+      sources: category || country ? " " : sources,
+
+      q: keyword,
+
+      category: category,
+
+      language: language,
+
+      country: country
+    }).then(response => {
+
+      console.log(response);
+
+      res.status(200).send(response)
+
+    });
+  } catch (error) {
+    console.log("server error")
+    res.status(500).send("server error")
+  }
+
 }
 
-module.exports = {getAllNews,getTopHeadlines}
+
+module.exports = { getAllNews, getTopHeadlines }

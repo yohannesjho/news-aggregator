@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {getAllNews,getTopHeadlines} = require('../controllers/newsControllers')
+const {getAllNews,getTopHeadlines,getNewsById} = require('../controllers/newsControllers')
 
 
 router.get('/',getAllNews)
-router.get('/topheadlines',getTopHeadlines)
+router.post('/topheadlines',getTopHeadlines)
+ 
 
 module.exports = router
