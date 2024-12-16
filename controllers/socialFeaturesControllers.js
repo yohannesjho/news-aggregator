@@ -29,3 +29,13 @@ const commentArticle = async (req,res) => {
         res.status(500).send({message:"server error"})
     }
 }
+
+const getComments = async (req,res) =>{
+    const {articleUrl} = req.body
+    try {
+        const result = await pool.query('SELECT user_id,comment,commented_at FROM comments WHERE article_url = $1',[articleUrl])
+        res.status(200).send(result.rows)
+    } catch (error) {
+        res.status(500).send({message:"server error"})
+    }
+}
