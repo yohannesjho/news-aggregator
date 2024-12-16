@@ -7,10 +7,12 @@ const app = express()
 app.use(express.json());
 const authRoutes = require('./routes/authRoutes')
 const preferenceRoutes = require('./routes/preferenceRoutes')
+const newsRoutes = require('./routes/newsRoutes')
 
 
 app.use('/api/auth',authRoutes);
 app.use('/api/preferences',preferenceRoutes)
+app.use('/api/news',newsRoutes)
 
 
 
