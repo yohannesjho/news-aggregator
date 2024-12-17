@@ -13,8 +13,17 @@ const setBreakingNewsPreference = async (breakingNews) => {
     }
 }
 
-const setDailyDigestPreference = async (req, res) => {
-
+const setDailyDigestPreference = async (dailyDigest) => {
+  try {
+    const preferedBreakingNews = await pool.query(`INSERT INTO notifications_preferences (user_id, daily_digest)
+       VALUES ($1, $2)
+       ON CONFLICT (user_id)
+       DO UPDATE SET daily_digest = $2, updated_at = CURRENT_TIMESTAMP`
+        [req.user.id, dailyDigest])
+        return preferedBreakingNews
+  } catch (error) {
+    throw {status: error?.status || 500,message:error?.message || error};
+  }
 }
 
 module.exports = { setBreakingNewsPreference, setDailyDigestPreference }

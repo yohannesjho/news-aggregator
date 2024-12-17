@@ -9,8 +9,13 @@ const setBreakingNewsPreference = async (breakingNews)=>{
     }
 }
 
-const setDailyDigestPreference = async (req,res)=>{
-
+const setDailyDigestPreference = async (dailyDigest)=>{
+     try {
+        const preferedDailyDigest = notification.setDailyDigestPreference(dailyDigest)
+        return preferedBreakingNews;
+     } catch (error) {
+        throw error;
+     }
 }
 
 module.exports = {setBreakingNewsPreference,setDailyDigestPreference}
