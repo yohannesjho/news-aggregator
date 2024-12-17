@@ -18,12 +18,16 @@ const preferenceRoutes = require('./routes/preferenceRoutes')
 
 const newsRoutes = require('./routes/newsRoutes')
 
+const socialFeaturesRoutes = require('./routes/socialFeaturesRoutes')
+
 
 app.use('/api/auth',authRoutes);
 
 app.use('/api/preferences',preferenceRoutes)
 
 app.use('/api/news',newsRoutes)
+
+app.use('/api/socialfeatures',socialFeaturesRoutes)
 
 
 

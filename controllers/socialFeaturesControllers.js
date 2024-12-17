@@ -1,4 +1,4 @@
-const pool  = require('../db/db')
+const pool  = require('../database/db')
 
 const shareArticle = async (req,res)=>{
     const {articleUrl,sharedWith,} = req.body
@@ -39,3 +39,5 @@ const getComments = async (req,res) =>{
         res.status(500).send({message:"server error"})
     }
 }
+
+module.exports = {shareArticle,saveArticle,commentArticle,getComments}

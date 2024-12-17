@@ -1,4 +1,4 @@
-const pool = require('../db/db')
+const pool = require('../database/db')
 const setInterests = async (req, res) => {
     const {interests } = req.body;
     console.log(interests)  

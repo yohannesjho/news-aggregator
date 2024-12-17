@@ -1,31 +1,25 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const pool = require('../db/db')
+const pool = require('../database/db')
+const authService = require('../services/authService')
 
 const signup = async (req, res) => {
 
+    const fields = req.body
+    
+    if(!fields.userName || !fields.email || !fields.password){
+        return res.status(404).send({message:"all feilds  shuch as userName, email and password should  be filled"})
+    }
+
     try {
-        const { userName, email, password } = req.body
-        if (!userName, !email, !password) {
-            return res.status(406).json({ message: 'all fields are required' })
-        }
-        const userCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email])
-
-        if (userCheck.rows.length > 0) {
-            return res.status(400).json({ message: "email already in use" })
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = await pool.query('INSERT INTO users (userName,email,password) VALUES ($1,$2,$3)', [userName, email, hashedPassword])
-
-        res.status(201).json({
-            message: 'User created successfully',
-
-        })
-
+         const createUser = await  authService.signup(fields)
+         
+         res.status(201).send(createUser)
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.log(error)
+        res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
     }
 }
 
