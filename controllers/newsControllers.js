@@ -35,7 +35,7 @@ const getTopHeadlines = async (req, res) => {
 
   } catch (error) {
     console.log("server error")
-    res.status(error?.status || 500).send({status:"failed", data:error?.message || error})
+    res.status(error?.status || 500).send({ status: "failed", data: error?.message || error })
   }
 
 }

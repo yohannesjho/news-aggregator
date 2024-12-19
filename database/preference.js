@@ -24,7 +24,7 @@ const setSources = async (sources) => {
             VALUES($1,$2)
             ON CONFLICT (user_id)
             DO UPDATE SET sources = $2 
-            RETURNING * `, 
+            RETURNING * `,
             [req.user.id, sources])
 
         return result
@@ -35,18 +35,18 @@ const setSources = async (sources) => {
 }
 
 const setKeywords = async () => {
- try {
-    const result = await pool.query(`INSERT INTO user_preferences(user_id,keywords)
+    try {
+        const result = await pool.query(`INSERT INTO user_preferences(user_id,keywords)
         VALUES($1,$2)
         ON CONFLICT (user_id)
         DO UPDATE SET keywords = $2 
-        RETURNING * `, 
-        [req.user.id, keywords])
+        RETURNING * `,
+            [req.user.id, keywords])
 
         return result;
- } catch (error) {
-    throw error
- }
+    } catch (error) {
+        throw error
+    }
 }
 
 module.exports = { setInterests, setSources, setKeywords }

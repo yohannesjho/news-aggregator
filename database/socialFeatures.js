@@ -27,7 +27,7 @@ const commentArticle = async () => {
     try {
         const result = await pool.query(`INSERT INTO comments(user_id,article_url,comment) VALUES($1,$2,$3)`,
             [req.user.id, articleUrl, comment])
-        
+
 
         return result;
     } catch (error) {
@@ -39,8 +39,8 @@ const getComments = async () => {
     try {
         const result = await pool.query(`SELECT user_id,comment,commented_at
              FROM comments 
-             WHERE article_url = $1`, 
-             [articleUrl])
+             WHERE article_url = $1`,
+            [articleUrl])
 
         return result;
     } catch (error) {

@@ -21,7 +21,7 @@ const setSources = async (req, res) => {
         res.status(201).send({ status: "ok", data: "news sources updated successfully" })
 
     } catch (error) {
-        res.status(error?.status || 500).send({ status: "failed", data:error?.message || error })
+        res.status(error?.status || 500).send({ status: "failed", data: error?.message || error })
     }
 }
 
@@ -29,10 +29,10 @@ const setKeywords = async (req, res) => {
     const { keywords } = req.body
     try {
         const keywords = preferenceServices.setKeywords(keywords)
-       
-        res.status(201).send({ staus: "ok", data:"keywords updated successfully" })
+
+        res.status(201).send({ staus: "ok", data: "keywords updated successfully" })
     } catch (error) {
-         
+
         res.status(error?.status || 500).send({ status: "faild", data: error?.message || error })
     }
 }

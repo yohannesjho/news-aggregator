@@ -6,20 +6,20 @@ const authService = require('../services/authService')
 const signup = async (req, res) => {
 
     const fields = req.body
-    
-    if(!fields.userName || !fields.email || !fields.password){
-        return res.status(404).send({message:"all feilds  shuch as userName, email and password should  be filled"})
+
+    if (!fields.userName || !fields.email || !fields.password) {
+        return res.status(404).send({ message: "all feilds  shuch as userName, email and password should  be filled" })
     }
 
     try {
-         const createUser = await  authService.signup(fields)
-         
-         res.status(201).send(createUser)
+        const createUser = await authService.signup(fields)
+
+        res.status(201).send(createUser)
     } catch (error) {
         console.log(error)
         res
-      .status(error?.status || 500)
-      .send({ status: "FAILED", data: { error: error?.message || error } });
+            .status(error?.status || 500)
+            .send({ status: "FAILED", data: { error: error?.message || error } });
     }
 }
 
@@ -64,7 +64,7 @@ const getProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
     try {
         console.log(req.body)
-        const { email,  newPassword } = req.body
+        const { email, newPassword } = req.body
         if (email) {
             const userCheck = await pool.query('SELECT * FROM users WHERE email= $1 AND id != $2 ', [email, req.user.id])
             if (userCheck.rows.length > 0) {
@@ -72,9 +72,9 @@ const updateProfile = async (req, res) => {
 
             }
         }
-           let updatedPassword
+        let updatedPassword
         if (newPassword) {
-           updatedPassword = await bcrypt.hash(newPassword, 10)
+            updatedPassword = await bcrypt.hash(newPassword, 10)
         }
 
         const updatedUser = await pool.query(
@@ -100,4 +100,4 @@ const updateProfile = async (req, res) => {
     }
 }
 
-module.exports = { signup, signin, getProfile,updateProfile };
+module.exports = { signup, signin, getProfile, updateProfile };
