@@ -8,11 +8,13 @@ const setInterests = async (interests) => {
     }
 }
 
-const setSources = () => {
+const setSources = (sources) => {
  try {
+    const sources  = preference.setSources(sources)
     
+    return sources;
  } catch (error) {
-    
+    throw error
  }
 }
 
