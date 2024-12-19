@@ -48,10 +48,11 @@ const commentArticle = async (req, res) => {
 const getComments = async (req, res) => {
     const { articleUrl } = req.body
     try {
-        const result = await pool.query('SELECT user_id,comment,commented_at FROM comments WHERE article_url = $1', [articleUrl])
-        res.status(200).send(result.rows)
+        const comments = socialFeaturesServices.getComments(articleUrl)
+        
+        res.status(200).send({status:"ok", data:comments})
     } catch (error) {
-        res.status(500).send({ message: "server error" })
+        res.status(error?.status || 500).send({ status:"failed", data:errro?.message || error})
     }
 }
 

@@ -28,4 +28,14 @@ const commentArticle = (parameters) => {
   }
 } 
 
-module.exports = { shareArticle, saveArticle, commentArticle}
+const getComments = (articleUrl) => {
+ try {
+    const comments = socialFeature.getComments(articleUrl)
+
+    return comments;
+ } catch (error) {
+    return error;
+ }
+}
+
+module.exports = { shareArticle, saveArticle, commentArticle, getComments}

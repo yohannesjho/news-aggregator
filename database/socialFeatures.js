@@ -35,4 +35,17 @@ const commentArticle = async () => {
     }
 }
 
+const getComments = async () => {
+    try {
+        const result = await pool.query(`SELECT user_id,comment,commented_at
+             FROM comments 
+             WHERE article_url = $1`, 
+             [articleUrl])
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = { shareArticle, saveArticle, commentArticle }
