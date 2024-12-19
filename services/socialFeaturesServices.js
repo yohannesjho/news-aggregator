@@ -9,8 +9,12 @@ const shareArticle = (parameters) => {
   }
 }
 
-const saveArticle = () => {
-
+const saveArticle = (articleUrl) => {
+   try {
+    const save = socialFeature.saveArticle(articleUrl)
+   } catch (error) {
+    
+   }
 }
 
 const commentArticle = () => {
