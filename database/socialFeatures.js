@@ -16,15 +16,23 @@ const saveArticle = async (articleUrl) => {
     try {
         const result = await pool.query(`INSERT INTO saved_article(user_id,article_url)
          VALUES($1,$2)`,
-        [req.user.id, articleUrl])
+            [req.user.id, articleUrl])
 
         return result
     } catch (error) {
-       throw error
+        throw error
     }
 }
-const commentArticle = () => {
+const commentArticle = async () => {
+    try {
+        const result = await pool.query(`INSERT INTO comments(user_id,article_url,comment) VALUES($1,$2,$3)`,
+            [req.user.id, articleUrl, comment])
+        
 
+        return result;
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = { shareArticle, saveArticle, commentArticle }

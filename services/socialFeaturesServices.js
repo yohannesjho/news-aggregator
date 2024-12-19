@@ -17,8 +17,15 @@ const saveArticle = (articleUrl) => {
    }
 }
 
-const commentArticle = () => {
-
+const commentArticle = (parameters) => {
+    const { articleUrl, comment } = parameters
+  try {
+    const comment = socialFeature.commentArticle(parameters)
+    
+    return comment;
+  } catch (error) {
+    throw error;
+  }
 } 
 
 module.exports = { shareArticle, saveArticle, commentArticle}

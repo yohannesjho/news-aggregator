@@ -31,11 +31,17 @@ const saveArticle = async (req, res) => {
 
 const commentArticle = async (req, res) => {
     const { articleUrl, comment } = req.body
+
+    const parameters = {
+        articleUrl,
+        comment
+    }
     try {
-        await pool.query("INSERT INTO comments(user_id,article_url,comment) VALUES($1,$2,$3)", [req.user.id, articleUrl, comment])
-        res.status(201).send({ message: "successfully commented on article" })
+        const comment = socialFeaturesServices.commentArticle(parameters)
+        
+        res.status(201).send({ status:"ok", data: "successfully commented on article" })
     } catch (error) {
-        res.status(500).send({ message: "server error" })
+        res.status(error?.status || 500).send({ status:"failed", data:error?.message || error })
     }
 }
 
