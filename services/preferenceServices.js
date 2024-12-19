@@ -18,8 +18,13 @@ const setSources = (sources) => {
  }
 }
 
-const setKeywords = () => {
-
+const setKeywords = (keyowrds) => {
+ try {
+    const keyowrds = preference.setKeywords(keyowrds)
+    return keywords
+ } catch (error) {
+    throw error
+ }
 }
 
 module.exports = { setInterests, setSources, setKeywords }
