@@ -4,7 +4,8 @@ const {getAllNews,getTopHeadlines,getNewsById} = require('../controllers/newsCon
 
 
 router.get('/',getAllNews)
-router.post('/topheadlines',getTopHeadlines)
+router.get('/topheadlines/:category',getTopHeadlines)
+router.get('/topheadlines',getTopHeadlines)
  
 
 module.exports = router

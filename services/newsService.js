@@ -21,11 +21,12 @@ const getAllNews = async (parameters) => {
 }
 
 const getTopHeadlines = async (parameters) => {
+    console.log(parameters)
     const { sources, keyword, category, language, country } = parameters
     try {
         const topHeadlines = await newsapi.v2.topHeadlines({
 
-            sources: category || country ? " " : sources,
+            sources: (category || country) ? " " : sources,
 
             q: keyword,
 

@@ -1,7 +1,8 @@
 const newsServices = require('../services/newsService')
 
 const getAllNews = async (req, res) => {
-  const { sources, keyword, domains, language, sortBy, page } = req.body
+  console.log(req.query)
+  const { sources, keyword, domains, language, sortBy, page } = req.query
 
   const parameters = {
     sources, keyword, domains, language, sortBy, page
@@ -19,7 +20,14 @@ const getAllNews = async (req, res) => {
 }
 
 const getTopHeadlines = async (req, res) => {
-  const { sources, keyword, category, language, country } = req.body
+ 
+  const category = req.params.category
+  console.log(req.query)
+
+  const { country, language, sources, keyword } = req.query; // Capture the filters from the query params
+
+
+  console.log(req.query)
 
   const parameters = {
     sources,
@@ -29,8 +37,10 @@ const getTopHeadlines = async (req, res) => {
     country
   }
 
+
   try {
-    const topHeadlines = newsServices.getTopHeadlines(parameters)
+    const topHeadlines = await newsServices.getTopHeadlines(parameters)
+
     res.status(200).send({ status: "ok", data: topHeadlines })
 
   } catch (error) {
