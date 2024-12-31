@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const authenticateToken = (req, res, next)=>{
     const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
 
+    console.log(token)
+
     if (!token) {
         return res.status(403).json({ message: 'Access denied. No token provided.' });
     }
@@ -13,7 +15,7 @@ const authenticateToken = (req, res, next)=>{
         }
 
         // If token is valid, add the decoded user data to the request object
-        req.user = decoded; // You can add more fields from the decoded token as needed
+        req.user = decoded;  
         next(); // Proceed to the next middleware or route handler
     });
 }

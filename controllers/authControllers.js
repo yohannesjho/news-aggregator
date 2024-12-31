@@ -6,6 +6,7 @@ const authService = require('../services/authService')
 const signup = async (req, res) => {
 
     const fields = req.body
+    console.log(fields)
 
     if (!fields.userName || !fields.email || !fields.password) {
         return res.status(404).send({ message: "all feilds  shuch as userName, email and password should  be filled" })
@@ -24,36 +25,31 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
-    try {
-        const { email, password } = req.body
-        const user = await pool.query('SELECT * FROM users WHERE email = $1', [email])
-        console.log(user.rows[0])
-        if (!user) { return res.status(400).json({ message: "invalid credentials" }) }
+    const fields = req.body
+    console.log(fields)
 
-        const validPassword = await bcrypt.compare(password, user.rows[0].password);
-        console.log(validPassword)
-        if (!validPassword) {
-            return res.status(400).json({ message: 'Invalid email or password' });
-        }
-
-        const token = jwt.sign(
-            { id: user.rows[0].id, email: user.rows[0].email },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-        res.status(200).json({
-            message: 'Login successful',
-            token,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+    if (!fields.email || !fields.password) {
+        return res.status(404).send({ message: "all feilds  should  be filled" })
     }
+
+    try {
+        const user = await authService.signin(fields)
+
+        console.log(user)
+
+        res.status(200).send({user})
+    } catch (error) {
+       
+        res
+            .status(error?.status || 500)
+            .send({ status: "FAILED", data: { error: error?.message || error } });
+    }
+   
 }
 
 const getProfile = async (req, res) => {
     try {
-        const user = await pool.query('SELECT (userName,email) FROM users WHERE id = $1', [req.user.id])
+        const user = await pool.query('SELECT userName,email FROM users WHERE id = $1', [req.user.id])
         console.log(user.rows)
         res.status(200).json(user.rows)
     } catch (error) {

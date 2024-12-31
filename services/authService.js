@@ -1,7 +1,7 @@
 const auth = require('../database/auth')
 
 const signup = async (fields) => {
-
+ console.log(fields)
   try {
     const createUser = await auth.signup(fields)
 
@@ -12,4 +12,19 @@ const signup = async (fields) => {
   }
 }
 
-module.exports = { signup }
+const signin = async (fields) => {
+   
+   try {
+     const user = await auth.signin(fields)
+
+     
+
+     return user;
+
+ 
+   } catch (error) {
+     throw error
+   }
+ }
+
+module.exports = { signup, signin }

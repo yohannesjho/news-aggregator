@@ -3,15 +3,11 @@ const newsapi = new NewsAPI(process.env.NEWS_API);
 
 
 const getAllNews = async (parameters) => {
-    const { sources, keyword, domains, language, sortBy, page } = parameters;
+    
     try {
         const allNews = await newsapi.v2.everything({
-            q: keyword,
-            sources: sources,
-            domains: domains,
-            language: language,
-            sortBy: sortBy,
-            page: page
+            q: "all",
+            
         })
         return allNews
     } catch (error) {
