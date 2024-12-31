@@ -8,15 +8,16 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-const { neon } = require("@neondatabase/serverless");
-
-const sql = neon(process.env.DATABASE_URL);
-
 app.use(cors({
     origin:['http://localhost:3000'],
     methods:['GET','POST','PUT','DELETE'],
     credentials:true
 }))
+
+const { neon } = require("@neondatabase/serverless");
+
+const sql = neon(process.env.DATABASE_URL);
+
 
 app.use(express.json());
 
